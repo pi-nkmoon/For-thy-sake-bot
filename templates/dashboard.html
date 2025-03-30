@@ -1,0 +1,99 @@
+<!-- templates/dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading Monitor Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>BTCUSDT Trading Monitor Dashboard</h1>
+
+    <form method="get" class="filter-form">
+        <label for="trade_type">Trade Type:</label>
+        <select name="trade_type" id="trade_type">
+            <option value="All" {% if trade_type_filter == 'All' %}selected{% endif %}>All</option>
+            <option value="Spot" {% if trade_type_filter == 'Spot' %}selected{% endif %}>Spot</option>
+            <option value="Futures" {% if trade_type_filter == 'Futures' %}selected{% endif %}>Futures</option>
+        </select>
+
+        <label for="side">Side:</label>
+        <select name="side" id="side">
+            <option value="All" {% if side_filter == 'All' %}selected{% endif %}>All</option>
+            <option value="BUY" {% if side_filter == 'BUY' %}selected{% endif %}>Buy</option>
+            <option value="SELL" {% if side_filter == 'SELL' %}selected{% endif %}>Sell</option>
+            <option value="LONG" {% if side_filter == 'LONG' %}selected{% endif %}>Long</option>
+            <option value="SHORT" {% if side_filter == 'SHORT' %}selected{% endif %}>Short</option>
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <h2>Spot Trades</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Side</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Symbol</th>
+                <th>Order ID</th>
+                <th>Commission</th>
+                <th>Commission Asset</th>
+                <!-- Add more columns if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for trade in spot_trades %}
+            <tr>
+                <td>{{ trade.time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ trade.side }}</td>
+                <td>{{ trade.price }}</td>
+                <td>{{ trade.qty }}</td>
+                <td>{{ trade.symbol }}</td>
+                <td>{{ trade.order_id }}</td>
+                <td>{{ trade.commission }}</td>
+                <td>{{ trade.commission_asset }}</td>
+                <!-- Add more data if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Futures Trades</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Side</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Realized PnL</th>
+                <th>Symbol</th>
+                <th>Order ID</th>
+                <th>Commission</th>
+                <th>Commission Asset</th>
+                <!-- Add more columns if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for trade in futures_trades %}
+            <tr>
+                <td>{{ trade.time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ trade.side }}</td>
+                <td>{{ trade.price }}</td>
+                <td>{{ trade.qty }}</td>
+                <td>{{ trade.realized_pnl }}</td>
+                <td>{{ trade.symbol }}</td>
+                <td>{{ trade.order_id }}</td>
+                <td>{{ trade.commission }}</td>
+                <td>{{ trade.commission_asset }}</td>
+                <!-- Add more data if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

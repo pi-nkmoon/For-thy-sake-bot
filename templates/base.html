@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title | default('Trading Monitor') }}</title>
+    <!-- Replace the Bootstrap CSS link in base.html -->
+
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/flatly/bootstrap.min.css"
+        integrity="sha384-..."
+        crossorigin="anonymous"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Include additional CSS files here -->
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Trading Monitor</a>
+      <!-- Navbar content -->
+    </nav>
+    <div class="container mt-4">
+        {% block content %}
+        <!-- Page-specific content goes here -->
+        {% endblock %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-..."
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-..."
+      crossorigin="anonymous"
+    ></script>
+    <!-- Include additional JS files here -->
+    {% block scripts %}{% endblock %}
+    <footer class="footer py-3 bg-dark text-white-50">
+        <div class="container text-center">
+          <small>&copy; 2023 FOR THY SAKE</small>
+        </div>
+      </footer>
+</body>
+</html>
