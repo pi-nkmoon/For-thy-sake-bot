@@ -1,0 +1,42 @@
+# utils/trade_executor.py
+
+import logging
+from binance.client import Client
+from config import TARGET_API_KEY, TARGET_API_SECRET, TRADING_PAIR, PRICE_PRECISION, QUANTITY_PRECISION
+from binance.exceptions import BinanceAPIException, BinanceOrderException
+
+logger = logging.getLogger(__name__)
+
+def execute_trade(side, quantity, price):
+    client = Client(api_key=TARGET_API_KEY, api_secret=TARGET_API_SECRET)
+    try:
+        # Adjust quantity and price precision
+        quantity = round(quantity, QUANTITY_PRECISION)
+        price = round(price, PRICE_PRECISION)
+
+        # Place a market order
+        if side == 'BUY':
+            order = client.futures_create_order(
+                symbol=TRADING_PAIR,
+                side=side,
+                type='MARKET',
+                quantity=quantity
+            )
+        elif side == 'SELL':
+            order = client.futures_create_order(
+                symbol=TRADING_PAIR,
+                side=side,
+                type='MARKET',
+                quantity=quantity
+            )
+        else:
+            logger.error(f"Unknown side: {side}")
+            return
+
+        logger.info(f"Executed {side} order on target account: {order}")
+    except BinanceAPIException as e:
+        logger.error(f"Binance API Exception: {e}")
+    except BinanceOrderException as e:
+        logger.error(f"Binance Order Exception: {e}")
+    except Exception as e:
+        logger.error(f"An unexpected error occurred: {e}")
